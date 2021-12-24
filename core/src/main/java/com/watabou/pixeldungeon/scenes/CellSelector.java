@@ -1,6 +1,6 @@
 /*
  * Pixel Dungeon
- * Copyright (C) 2012-2014  Oleg Dolya
+ * Copyright (C) 2012-2015 Oleg Dolya
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 package com.watabou.pixeldungeon.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.watabou.input.NoosaInputProcessor;
 import com.watabou.noosa.TouchArea;
 import com.watabou.pixeldungeon.Dungeon;
@@ -29,34 +30,35 @@ import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 
 public class CellSelector extends TouchArea<GameAction> {
-	public Listener listener = null;
 
+	public Listener listener = null;
+	
 	public boolean enabled;
 
 	private float mouseZoom;
-
+	
 	private float dragThreshold;
-
+	
 	public CellSelector( DungeonTilemap map ) {
 		super( map );
 		camera = map.camera();
 
 		mouseZoom = camera.zoom;
-
+		
 		dragThreshold = PixelScene.defaultZoom * DungeonTilemap.SIZE / 2;
 	}
-
+	
 	@Override
 	protected void onClick( NoosaInputProcessor.Touch touch ) {
 		if (dragging) {
-
+			
 			dragging = false;
-
+			
 		} else {
-
-			select( ((DungeonTilemap)target).screenToTile(
-					(int)touch.current.x,
-					(int)touch.current.y ) );
+			
+			select( ((DungeonTilemap)target).screenToTile( 
+				(int)touch.current.x, 
+				(int)touch.current.y ) );
 		}
 	}
 
@@ -142,38 +144,38 @@ public class CellSelector extends TouchArea<GameAction> {
 
 		return value;
 	}
-
+	
 	public void select( int cell ) {
 		if (enabled && listener != null && cell != -1) {
-
+			
 			listener.onSelect( cell );
 			GameScene.ready();
-
+			
 		} else {
-
+			
 			GameScene.cancel();
-
+			
 		}
 	}
-
+	
 	private boolean pinching = false;
 	private NoosaInputProcessor.Touch another;
 	private float startZoom;
 	private float startSpan;
-
+	
 	@Override
 	protected void onTouchDown( NoosaInputProcessor.Touch t ) {
 
 		if (t != touch && another == null) {
-
+					
 			if (!touch.down) {
 				touch = t;
 				onTouchDown( t );
 				return;
 			}
-
+			
 			pinching = true;
-
+			
 			another = t;
 			startSpan = PointF.distance( touch.current, another.current );
 			startZoom = camera.zoom;
@@ -181,13 +183,13 @@ public class CellSelector extends TouchArea<GameAction> {
 			dragging = false;
 		}
 	}
-
+	
 	@Override
 	protected void onTouchUp( NoosaInputProcessor.Touch t ) {
 		if (pinching && (t == touch || t == another)) {
 
 			pinching = false;
-
+			
 			int zoom = Math.round( camera.zoom );
 			camera.zoom( zoom );
 			PixelDungeon.zoom( (int)(zoom - PixelScene.defaultZoom) );
@@ -199,7 +201,7 @@ public class CellSelector extends TouchArea<GameAction> {
 			another = null;
 			lastPos.set( touch.current );
 		}
-	}
+	}	
 
 	private boolean dragging = false;
 	private PointF lastPos = new PointF();
@@ -218,7 +220,7 @@ public class CellSelector extends TouchArea<GameAction> {
 
 	@Override
 	protected void onDrag( NoosaInputProcessor.Touch t ) {
-
+		 
 		camera.target = null;
 
 		if (pinching) {
@@ -232,31 +234,32 @@ public class CellSelector extends TouchArea<GameAction> {
 			}
 
 		} else {
-
+		
 			if (!dragging && PointF.distance( t.current, t.start ) > dragThreshold) {
-
+				
 				dragging = true;
 				lastPos.set( t.current );
-
+				
 			} else if (dragging) {
 				camera.scroll.offset( PointF.diff( lastPos, t.current ).invScale( camera.zoom ) );
-				lastPos.set( t.current );
-			}
+				lastPos.set( t.current );	
+			}	
 		}
-
-	}
-
+		
+	}	
+	
 	public void cancel() {
 
 		if (listener != null) {
-			listener.onSelect(null);
+			listener.onSelect( null );
 		}
-
+		
 		GameScene.ready();
 	}
-
+	
 	public interface Listener {
 		void onSelect( Integer cell );
 		String prompt();
 	}
+
 }

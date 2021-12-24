@@ -319,6 +319,7 @@ public class GameScene extends PixelScene {
 
 			fadeIn();
 		}
+		selectCell( defaultCellListener );
 	}
 	
 	public void destroy() {
