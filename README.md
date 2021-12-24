@@ -1,8 +1,12 @@
-# pixel-dungeon
+# libGDX Pixel Dungeon
+I wanna play latest (v1.9.1) [Pixel Dungeon](https://github.com/watabou/pixel-dungeon) on desktop natively, but I do not find any official desktop version of v1.9.1.  
+Arcnor's [libGDX port of Pixel Dungeon](https://github.com/Arcnor/pixel-dungeon-gdx) is awesome, but its latest version just only v1.7.2.  
+So, I migrated original source to Arcnor's version. Now I can play v1.9.1 on desktop without any Android emulator.
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
+This is a [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+## License
+[GPL-3.0](https://github.com/anyicomplex/libgdx-pixel-dungeon/blob/master/LICENSE)
 
 ## Gradle
 
