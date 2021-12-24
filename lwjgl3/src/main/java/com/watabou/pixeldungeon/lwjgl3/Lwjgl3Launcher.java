@@ -78,11 +78,5 @@ public class Lwjgl3Launcher {
 		public Lwjgl3Support( String version, String basePath, NoosaInputProcessor inputProcessor ) {
 			super( version, basePath, inputProcessor );
 		}
-
-		@Override
-		public boolean isFullscreenEnabled() {
-			//	return Display.getPixelScaleFactor() == 1f;
-			return !SharedLibraryLoader.isMac;
-		}
 	}
 }

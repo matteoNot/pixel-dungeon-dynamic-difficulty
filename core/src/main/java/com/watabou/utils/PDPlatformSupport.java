@@ -25,7 +25,4 @@ public class PDPlatformSupport<GameActionType> {
 		return inputProcessor;
 	}
 
-	public boolean isFullscreenEnabled() {
-		return false;
-	}
 }
