@@ -188,8 +188,8 @@ public class PixelDungeon extends Game {
 			Assets.SND_DEGRADE,
 			Assets.SND_MIMIC );
 	}
-	
-	public static void switchNoFade( Class<? extends PixelScene> c ) {
+
+	public static void switchNoFade(Class<? extends PixelScene> c ) {
 		PixelScene.noFade = true;
 		switchScene( c );
 	}

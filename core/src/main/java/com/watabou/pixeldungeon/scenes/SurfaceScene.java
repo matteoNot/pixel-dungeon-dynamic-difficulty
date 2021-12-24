@@ -162,6 +162,7 @@ public class SurfaceScene extends PixelScene {
 		
 		RedButton gameOver = new RedButton( "Game Over" ) {
 			protected void onClick() {
+				TitleScene.signsTime = 0;
 				Game.switchScene( TitleScene.class );
 			}
 		};

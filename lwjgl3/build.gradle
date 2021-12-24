@@ -51,7 +51,7 @@ jar {
 	}
 }
 
-task execjar (dependsOn: jar, type: JavaExec) {
+task runJar (dependsOn: jar, type: JavaExec) {
 	classpath = files('build/libs/' + jarBaseName + '-' + appVersion + '.jar')
 	setIgnoreExitValue(true)
 

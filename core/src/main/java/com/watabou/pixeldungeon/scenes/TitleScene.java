@@ -43,6 +43,8 @@ public class TitleScene extends PixelScene {
 	private static final String TXT_HIGHSCORES	= "Rankings";
 	private static final String TXT_BADGES		= "Badges";
 	private static final String TXT_ABOUT		= "About";
+
+	public static float signsTime = 0;
 	
 	@Override
 	public void create() {
@@ -74,11 +76,10 @@ public class TitleScene extends PixelScene {
 		placeTorch( title.x + title.width - 18, title.y + 20 );
 		
 		Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
-			private float time = 0;
 			@Override
 			public void update() {
 				super.update();
-				am = (float)Math.sin( -(time += Game.elapsed) );
+				am = (float)Math.sin( -(signsTime += Game.elapsed) );
 			}
 			@Override
 			public void draw() {

@@ -104,6 +104,7 @@ public class WndGame extends Window {
 					} catch (IOException e) {
 						// Do nothing
 					}
+					TitleScene.signsTime = 0;
 					Game.switchScene( TitleScene.class );
 				}
 			}, new RedButton( TXT_EXIT ) {
