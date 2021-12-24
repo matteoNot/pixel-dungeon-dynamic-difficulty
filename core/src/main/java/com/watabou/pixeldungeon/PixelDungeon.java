@@ -128,6 +128,9 @@ public class PixelDungeon extends Game {
 		boolean landscape = Gdx.graphics.getWidth() > Gdx.graphics.getHeight();
 
 		final Preferences prefs = Preferences.INSTANCE;
+		if (prefs.getBoolean(Preferences.KEY_WINDOW_FULLSCREEN, false)) {
+			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+		}
 		if (prefs.getBoolean(Preferences.KEY_LANDSCAPE, false) != landscape) {
 			landscape( !landscape );
 		}
@@ -185,20 +188,6 @@ public class PixelDungeon extends Game {
 			Assets.SND_DEGRADE,
 			Assets.SND_MIMIC );
 	}
-
-	@Override
-	public void resize(int width, int height) {
-		super.resize(width, height);
-
-		Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
-		boolean maximized = width >= mode.width || height >= mode.height;
-
-		if (!maximized && !fullscreen()) {
-			final Preferences prefs = Preferences.INSTANCE;
-			prefs.put(Preferences.KEY_WINDOW_WIDTH, width);
-			prefs.put(Preferences.KEY_WINDOW_HEIGHT, height);
-		}
-	}
 	
 	public static void switchNoFade( Class<? extends PixelScene> c ) {
 		PixelScene.noFade = true;
@@ -228,15 +217,20 @@ public class PixelDungeon extends Game {
 
 			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		} else {
+			prefs.put(Preferences.KEY_WINDOW_FULLSCREEN, false);
 			int w = prefs.getInt(Preferences.KEY_WINDOW_WIDTH, Preferences.DEFAULT_WINDOW_WIDTH);
 			int h = prefs.getInt(Preferences.KEY_WINDOW_HEIGHT, Preferences.DEFAULT_WINDOW_HEIGHT);
-			prefs.put(Preferences.KEY_WINDOW_FULLSCREEN, false);
 			Gdx.graphics.setWindowedMode(w, h);
 		}
 	}
 
 	public static boolean fullscreen() {
 		return Gdx.graphics.isFullscreen();
+	}
+
+	public static boolean maximized() {
+		Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
+		return (width >= mode.width || height >= mode.height) && (!fullscreen());
 	}
 	
 	public static void scaleUp( boolean value ) {

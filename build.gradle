@@ -27,8 +27,13 @@ configure(subprojects - project(':android')) {
 }
 
 subprojects {
-	version = '0.0.1'
-	ext.appName = 'pixel-dungeon'
+	ext {
+		appName = "Pixel Dungeon"
+		appVersion = '1.9.1'
+		appVersionCode = 74
+		appSourceCompatibility = '1.8'
+	}
+	version = appVersion
 	repositories {
 		mavenCentral()
 		mavenLocal()

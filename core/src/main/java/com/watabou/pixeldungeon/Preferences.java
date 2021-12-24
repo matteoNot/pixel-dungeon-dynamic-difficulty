@@ -28,7 +28,7 @@ public enum Preferences {
 	
 	public static final String KEY_LANDSCAPE	= "landscape";
 	public static final String KEY_IMMERSIVE	= "immersive";
-	public static final String KEY_GOOGLE_PLAY	= "google_play";
+	public static final String KEY_GOOGLE_PLAY	= "googlePlay";
 	public static final String KEY_SCALE_UP		= "scaleup";
 	public static final String KEY_MUSIC		= "music";
 	public static final String KEY_SOUND_FX		= "soundfx";
@@ -38,11 +38,14 @@ public enum Preferences {
 	public static final String KEY_DONATED		= "donated";
 	public static final String KEY_INTRO		= "intro";
 	public static final String KEY_BRIGHTNESS	= "brightness";
-	public static final String KEY_SECOND_QUICKSLOT    = "secondQuickslot";
+	public static final String KEY_SECOND_QUICKSLOT     = "secondQuickslot";
 
 	public static final String KEY_WINDOW_FULLSCREEN	= "windowFullscreen";
+	public static final String KEY_WINDOW_MAXIMIZED     = "windowMaximized";
 	public static final String KEY_WINDOW_WIDTH			= "windowWidth";
 	public static final String KEY_WINDOW_HEIGHT		= "windowHeight";
+	public static final String KEY_WINDOW_POSITION_X    = "windowPositionX";
+	public static final String KEY_WINDOW_POSITION_Y    = "windowPositionY";
 
 	public static final int DEFAULT_WINDOW_WIDTH = 960;
 	public static final int DEFAULT_WINDOW_HEIGHT = 640;
@@ -84,4 +87,5 @@ public enum Preferences {
 		get().putString(key, value);
 		get().flush();
 	}
+
 }
