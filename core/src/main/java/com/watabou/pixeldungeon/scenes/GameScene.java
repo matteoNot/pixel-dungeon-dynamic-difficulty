@@ -214,6 +214,7 @@ public class GameScene extends PixelScene {
 		toolbar = new Toolbar();
 		toolbar.camera = uiCamera;
 		toolbar.setRect( 0,uiCamera.height - toolbar.height(), uiCamera.width, toolbar.height() );
+		Toolbar.secondQuickslot(PixelDungeon.secondQuickslot());
 		add( toolbar );
 		
 		AttackIndicator attack = new AttackIndicator();

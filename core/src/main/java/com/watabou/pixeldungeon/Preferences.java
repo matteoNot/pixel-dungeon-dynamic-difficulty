@@ -35,13 +35,14 @@ public enum Preferences {
 	public static final String KEY_DONATED		= "donated";
 	public static final String KEY_INTRO		= "intro";
 	public static final String KEY_BRIGHTNESS	= "brightness";
+	public static final String KEY_SECOND_QUICKSLOT    = "secondQuickslot";
 
 	public static final String KEY_WINDOW_FULLSCREEN	= "windowFullscreen";
 	public static final String KEY_WINDOW_WIDTH			= "windowWidth";
 	public static final String KEY_WINDOW_HEIGHT		= "windowHeight";
 
-	public static final int DEFAULT_WINDOW_WIDTH = 480;
-	public static final int DEFAULT_WINDOW_HEIGHT = 800;
+	public static final int DEFAULT_WINDOW_WIDTH = 960;
+	public static final int DEFAULT_WINDOW_HEIGHT = 640;
 
 	public static final String FILE_NAME = "preferences.xml";
 	

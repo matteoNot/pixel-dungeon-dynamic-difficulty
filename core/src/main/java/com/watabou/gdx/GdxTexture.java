@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 
 public class GdxTexture extends Texture {
+
 	public GdxTexture(String internalPath) {
 		super(internalPath);
 	}

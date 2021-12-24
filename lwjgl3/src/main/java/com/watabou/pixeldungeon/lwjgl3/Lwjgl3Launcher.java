@@ -1,9 +1,7 @@
 package com.watabou.pixeldungeon.lwjgl3;
 
 import com.badlogic.gdx.Files;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Preferences;
+import com.badlogic.gdx.backends.lwjgl3.*;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.watabou.input.NoosaInputProcessor;
 import com.watabou.pixeldungeon.PixelDungeon;
@@ -49,17 +47,46 @@ public class Lwjgl3Launcher {
 		com.badlogic.gdx.Preferences prefs = new Lwjgl3Preferences(Preferences.FILE_NAME, storageBasePath + storageRelativePath);
 		boolean isFullscreen = prefs.getBoolean(Preferences.KEY_WINDOW_FULLSCREEN, false);
 
-		configuration.setWindowSizeLimits(Preferences.DEFAULT_WINDOW_WIDTH, Preferences.DEFAULT_WINDOW_HEIGHT, -1, -1);
-		if (isFullscreen) {
-
-		}
-		else {
+		configuration.setWindowSizeLimits(Preferences.DEFAULT_WINDOW_WIDTH / 2, Preferences.DEFAULT_WINDOW_HEIGHT / 2, -1, -1);
+		if (!isFullscreen) {
 			int width = prefs.getInteger(Preferences.KEY_WINDOW_WIDTH, Preferences.DEFAULT_WINDOW_WIDTH);
 			int height = prefs.getInteger(Preferences.KEY_WINDOW_HEIGHT, Preferences.DEFAULT_WINDOW_HEIGHT);
 			configuration.setWindowedMode(width, height);
 		}
 		configuration.setWindowIcon(Files.FileType.Internal,
 				"ic_launcher_128.png", "ic_launcher_32.png", "ic_launcher_16.png");
+		configuration.setInitialVisible(false);
+		configuration.setWindowListener(new Lwjgl3WindowListener() {
+			@Override
+			public void created(Lwjgl3Window window) {
+				window.postRunnable(new Runnable() {
+					@Override
+					public void run() {
+						window.setVisible(true);
+					}
+				});
+			}
+			@Override
+			public void iconified(boolean isIconified) {
+
+			}
+			@Override
+			public void maximized(boolean isMaximized) {
+
+			}
+			@Override
+			public void focusLost() {}
+			@Override
+			public void focusGained() {}
+			@Override
+			public boolean closeRequested() {
+				return true;
+			}
+			@Override
+			public void filesDropped(String[] files) {}
+			@Override
+			public void refreshRequested() {}
+		});
 		configuration.useVsync(true);
 		//// Limits FPS to the refresh rate of the currently active monitor.
 		configuration.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate);
@@ -79,4 +106,5 @@ public class Lwjgl3Launcher {
 			super( version, basePath, inputProcessor );
 		}
 	}
+
 }

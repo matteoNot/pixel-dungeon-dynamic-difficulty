@@ -19,7 +19,6 @@ package com.watabou.noosa;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
@@ -29,7 +28,6 @@ import com.watabou.input.NoosaInputProcessor;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PDPlatformSupport;
-import com.watabou.utils.Signal;
 import com.watabou.utils.SystemTime;
 
 import java.io.IOException;
@@ -73,6 +71,7 @@ public abstract class Game<GameActionType> implements ApplicationListener {
 		super();
 		sceneClass = c;
 		this.platformSupport = platformSupport;
+		version = platformSupport.getVersion();
 		this.inputProcessor = platformSupport.getInputProcessor();
 		this.basePath = platformSupport.getBasePath();
 	}

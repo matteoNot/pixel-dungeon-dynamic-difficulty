@@ -26,6 +26,8 @@ import com.watabou.pixeldungeon.input.GameAction;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.scenes.TitleScene;
+import com.watabou.pixeldungeon.ui.QuickSlot;
+import com.watabou.pixeldungeon.ui.Toolbar;
 import com.watabou.utils.PDPlatformSupport;
 
 public class PixelDungeon extends Game {
@@ -279,6 +281,17 @@ public class PixelDungeon extends Game {
 	
 	public static boolean brightness() {
 		return Preferences.INSTANCE.getBoolean( Preferences.KEY_BRIGHTNESS, false );
+	}
+
+	public static void secondQuickslot( boolean value ) {
+		Preferences.INSTANCE.put( Preferences.KEY_SECOND_QUICKSLOT, value );
+		if (scene() instanceof GameScene) {
+			Toolbar.secondQuickslot(value);
+		}
+	}
+
+	public static boolean secondQuickslot() {
+		return Preferences.INSTANCE.getBoolean( Preferences.KEY_SECOND_QUICKSLOT, false );
 	}
 	
 	public static void donated( String value ) {

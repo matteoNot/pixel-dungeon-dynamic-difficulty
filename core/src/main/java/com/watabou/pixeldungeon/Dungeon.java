@@ -515,8 +515,9 @@ public class Dungeon {
 		
 		hero = null;
 		hero = (Hero)bundle.get( HERO );
-		
-		QuickSlot.compress();
+
+		// FIXME: Second quick slot logic leak
+		// QuickSlot.compress();
 		
 		gold = bundle.getInt( GOLD );
 		depth = bundle.getInt( DEPTH );

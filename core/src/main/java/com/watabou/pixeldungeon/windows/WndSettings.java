@@ -167,11 +167,11 @@ public class WndSettings extends Window {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					Toolbar.secondQuickslot( checked() );
+					PixelDungeon.secondQuickslot(checked());
 				}
 			};
 			btnQuickslot.setRect( 0, btnBrightness.bottom() + GAP, WIDTH, BTN_HEIGHT );
-			btnQuickslot.checked( Toolbar.secondQuickslot() );
+			btnQuickslot.checked( PixelDungeon.secondQuickslot() );
 			add( btnQuickslot );
 			
 			lastBtn = btnQuickslot;

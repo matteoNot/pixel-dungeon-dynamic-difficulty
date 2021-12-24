@@ -264,8 +264,8 @@ public class QuickSlot extends Button implements WndBag.Listener {
 			bundle.put( QUICKSLOT1, ((Class<?>)primaryValue).getName() );
 		}
 		if (QuickSlot.secondaryValue instanceof Class &&
-			stuff.getItem( (Class<? extends Item>)secondaryValue ) != null &&
-			Toolbar.secondQuickslot()) {
+			stuff.getItem( (Class<? extends Item>)secondaryValue ) != null /* &&
+			Toolbar.secondQuickslot() */ ) {
 					
 			bundle.put( QUICKSLOT2, ((Class<?>)secondaryValue).getName() );
 		}
@@ -275,7 +275,7 @@ public class QuickSlot extends Button implements WndBag.Listener {
 		if (item == primaryValue) {
 			bundle.put( QuickSlot.QUICKSLOT1, true );
 		}
-		if (item == secondaryValue && Toolbar.secondQuickslot()) {
+		if (item == secondaryValue /* && Toolbar.secondQuickslot() */ ) {
 			bundle.put( QuickSlot.QUICKSLOT2, true );
 		}
 	}
@@ -309,7 +309,7 @@ public class QuickSlot extends Button implements WndBag.Listener {
 			secondaryValue = item;
 		}
 	}
-	
+
 	public static void compress() {
 		if ((primaryValue == null && secondaryValue != null) ||
 			(primaryValue == secondaryValue)) {
