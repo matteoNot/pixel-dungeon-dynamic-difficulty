@@ -5,6 +5,9 @@ So, I migrated original source to Arcnor's version. Now I can play v1.9.1 on des
 
 This is a [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
 
+## License
+[GPL-3.0](https://github.com/anyicomplex/libgdx-pixel-dungeon/blob/master/LICENSE)
+
 ## Gradle
 
 This project uses [Gradle](http://gradle.org/) to manage dependencies.
