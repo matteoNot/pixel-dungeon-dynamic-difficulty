@@ -1,5 +1,5 @@
 # libGDX Pixel Dungeon
-I wanna play latest (v1.9.1) [Pixel Dungeon](https://github.com/watabou/pixel-dungeon) on desktop natively, but I do not find any official desktop version of v1.9.1.  
+I wanna play [Pixel Dungeon](https://github.com/watabou/pixel-dungeon) v1.9.1 on desktop natively, but I do not find any official desktop version of v1.9.1.  
 Arcnor's [libGDX port of Pixel Dungeon](https://github.com/Arcnor/pixel-dungeon-gdx) is awesome, but its latest version just only v1.7.2.  
 So, I migrated original source to Arcnor's version. Now I can play v1.9.1 on desktop without any Android emulator.
 
