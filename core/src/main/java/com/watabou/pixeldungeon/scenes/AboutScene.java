@@ -20,7 +20,6 @@
  */
 package com.watabou.pixeldungeon.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.watabou.input.NoosaInputProcessor;
 import com.watabou.noosa.BitmapTextMultiline;
 import com.watabou.noosa.Camera;
@@ -49,7 +48,7 @@ public class AboutScene extends PixelScene {
 		"LibGDX port: Arcnor, Anyicomplex\n" +
 		"Music: Cube_Code\n\n" + 
 		"This game is inspired by Brian Walker's Brogue. " +
-		"Try it on Windows, Linux or Mac OS X - it's awesome! ;)\n ";
+		"Try it on Windows, Linux or Mac OS - it's awesome! ;)\n ";
 	
 	private static final String TXT_SITE = "Official website:";
 	private static final String TXT_WIKI = "Official wiki:";
