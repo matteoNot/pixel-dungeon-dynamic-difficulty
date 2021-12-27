@@ -4,6 +4,4 @@ eclipse.project.name = appName + '-core'
 dependencies {
 	api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
 	api "com.badlogicgames.gdx:gdx:$gdxVersion"
-	//noinspection GradleDependency
-	api "org.json:json:20140107"
 }
