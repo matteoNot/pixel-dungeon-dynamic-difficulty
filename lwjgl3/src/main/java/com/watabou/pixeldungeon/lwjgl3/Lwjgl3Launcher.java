@@ -25,7 +25,7 @@ public class Lwjgl3Launcher {
 	private static Lwjgl3Application createApplication() {
 		String appName = Lwjgl3Launcher.class.getPackage().getSpecificationTitle();
 		String version = Lwjgl3Launcher.class.getPackage().getSpecificationVersion();
-		int versionCode = Integer.parseInt(Lwjgl3Launcher.class.getPackage().getImplementationVersion());
+		// int versionCode = Integer.parseInt(Lwjgl3Launcher.class.getPackage().getImplementationVersion());
 		if (version == null) {
 			version = "???";
 		}
@@ -53,7 +53,7 @@ public class Lwjgl3Launcher {
 		config.setPreferencesConfig(storageBasePath + storageRelativePath, Files.FileType.Absolute);
 		// FIXME: This is a hack to get access to the preferences before we have an application setup
 		com.badlogic.gdx.Preferences prefs = new Lwjgl3Preferences(
-				new Lwjgl3FileHandle(storageBasePath + storageRelativePath + Preferences.FILE_NAME, Files.FileType.Absolute)
+				new Lwjgl3FileHandle(storageBasePath + storageRelativePath + Preferences.FILE_NAME + ".xml", Files.FileType.Absolute)
 		);
 
 		config.setWindowSizeLimits(Preferences.DEFAULT_WINDOW_WIDTH / 2, Preferences.DEFAULT_WINDOW_HEIGHT / 2, -1, -1);

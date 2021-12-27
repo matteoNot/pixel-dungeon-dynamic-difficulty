@@ -51,21 +51,14 @@ public enum Preferences {
 	public static final int DEFAULT_WINDOW_WIDTH = 960;
 	public static final int DEFAULT_WINDOW_HEIGHT = 640;
 
-	public static final String FILE_NAME;
-	static {
-		if (Gdx.app.getType() == Application.ApplicationType.Android) {
-			FILE_NAME = "preferences";
-		}
-		else {
-			FILE_NAME = "preferences.xml";
-		}
-	}
+	public static final String FILE_NAME = "preferences";
 	
 	private com.badlogic.gdx.Preferences prefs;
 
 	private com.badlogic.gdx.Preferences get() {
 		if (prefs == null) {
-			prefs = Gdx.app.getPreferences(FILE_NAME);
+			prefs = Gdx.app.getType() == Application.ApplicationType.Android ?
+					Gdx.app.getPreferences(FILE_NAME) : Gdx.app.getPreferences(FILE_NAME + ".xml");
 		}
 		return prefs;
 	}
