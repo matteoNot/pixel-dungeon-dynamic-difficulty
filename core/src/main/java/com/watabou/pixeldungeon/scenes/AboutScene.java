@@ -58,16 +58,19 @@ public class AboutScene extends PixelScene {
 	private static final String LNK_SITE = "pixeldungeon.watabou.ru";
 	private static final String LNK_WIKI = "pixeldungeon.fandom.com";
 
-	private static final String LNK_SRC = "github.com/watabou/pixel-dungeon";
+	private static final String TXT_SRC0 = "github/pixel-dungeon";
+	private static final String TXT_SRC1 = "github/pixel-dungeon-gdx";
+	private static final String TXT_SRC2 = "github/vanilla-pixel-dungeon";
+	private static final String LNK_SRC0 = "github.com/watabou/pixel-dungeon";
 	private static final String LNK_SRC1 = "github.com/Arcnor/pixel-dungeon-gdx";
-	private static final String LNK_SRC2 = "github.com/anyicomplex/libgdx-pixel-dungeon";
+	private static final String LNK_SRC2 = "github.com/anyicomplex/vanilla-pixel-dungeon";
 	
 	@Override
 	public void create() {
 		super.create();
 		
 		BitmapTextMultiline textIntro = createMultiline( TXT_INTRO, 8 );
-		textIntro.maxWidth = Math.min( Camera.main.width, 180 );
+		textIntro.maxWidth = Math.min( Camera.main.width, 120 );
 		textIntro.measure();
 		add( textIntro );
 		
@@ -75,7 +78,7 @@ public class AboutScene extends PixelScene {
 		textIntro.y = align( (Camera.main.height - textIntro.height() / 3 * 5) / 2 );
 
 		BitmapTextMultiline textSite = createMultiline( TXT_SITE, 8 );
-		textSite.maxWidth = Math.min( Camera.main.width, 180 );
+		textSite.maxWidth = Math.min( Camera.main.width, 120 );
 		textSite.measure();
 		add( textSite );
 
@@ -83,7 +86,7 @@ public class AboutScene extends PixelScene {
 		textSite.y = textIntro.y + textIntro.height();
 		
 		BitmapTextMultiline linkSite = createMultiline( LNK_SITE, 8 );
-		linkSite.maxWidth = Math.min( Camera.main.width, 180 );
+		linkSite.maxWidth = Math.min( Camera.main.width, 120 );
 		linkSite.measure();
 		linkSite.hardlight( Window.TITLE_COLOR );
 		add( linkSite );
@@ -100,7 +103,7 @@ public class AboutScene extends PixelScene {
 		add( hotAreaSite );
 
 		BitmapTextMultiline textWiki = createMultiline( TXT_WIKI, 8 );
-		textWiki.maxWidth = Math.min( Camera.main.width, 180 );
+		textWiki.maxWidth = Math.min( Camera.main.width, 120 );
 		textWiki.measure();
 		add( textWiki );
 
@@ -108,7 +111,7 @@ public class AboutScene extends PixelScene {
 		textWiki.y = linkSite.y + linkSite.height();
 
 		BitmapTextMultiline linkWiki = createMultiline( LNK_WIKI, 8 );
-		linkWiki.maxWidth = Math.min( Camera.main.width, 180 );
+		linkWiki.maxWidth = Math.min( Camera.main.width, 120 );
 		linkWiki.measure();
 		linkWiki.hardlight( Window.TITLE_COLOR );
 		add( linkWiki );
@@ -125,15 +128,15 @@ public class AboutScene extends PixelScene {
 		add( hotAreaWiki );
 
 		BitmapTextMultiline textSrc = createMultiline( TXT_SRC, 8 );
-		textSrc.maxWidth = Math.min( Camera.main.width, 180 );
+		textSrc.maxWidth = Math.min( Camera.main.width, 120 );
 		textSrc.measure();
 		add( textSrc );
 
 		textSrc.x = linkWiki.x;
 		textSrc.y = linkWiki.y + linkWiki.height();
 
-		BitmapTextMultiline linkSrc = createMultiline( LNK_SRC, 8 );
-		linkSrc.maxWidth = Math.min( Camera.main.width, 180 );
+		BitmapTextMultiline linkSrc = createMultiline( TXT_SRC0, 8 );
+		linkSrc.maxWidth = Math.min( Camera.main.width, 120 );
 		linkSrc.measure();
 		linkSrc.hardlight( Window.TITLE_COLOR );
 		add( linkSrc );
@@ -144,13 +147,13 @@ public class AboutScene extends PixelScene {
 		TouchArea hotAreaSrc = new TouchArea( linkSrc ) {
 			@Override
 			protected void onClick( NoosaInputProcessor.Touch touch ) {
-				OpenURI.fromString("https://" + LNK_SRC);
+				OpenURI.fromString("https://" + LNK_SRC0);
 			}
 		};
 		add( hotAreaSrc );
 
-		BitmapTextMultiline linkSrc1 = createMultiline( LNK_SRC1, 8 );
-		linkSrc1.maxWidth = Math.min( Camera.main.width, 180 );
+		BitmapTextMultiline linkSrc1 = createMultiline( TXT_SRC1, 8 );
+		linkSrc1.maxWidth = Math.min( Camera.main.width, 120 );
 		linkSrc1.measure();
 		linkSrc1.hardlight( Window.TITLE_COLOR );
 		add( linkSrc1 );
@@ -166,8 +169,8 @@ public class AboutScene extends PixelScene {
 		};
 		add( hotAreaSrc1 );
 
-		BitmapTextMultiline linkSrc2 = createMultiline( LNK_SRC2, 8 );
-		linkSrc2.maxWidth = Math.min( Camera.main.width, 180 );
+		BitmapTextMultiline linkSrc2 = createMultiline( TXT_SRC2, 8 );
+		linkSrc2.maxWidth = Math.min( Camera.main.width, 120 );
 		linkSrc2.measure();
 		linkSrc2.hardlight( Window.TITLE_COLOR );
 		add( linkSrc2 );

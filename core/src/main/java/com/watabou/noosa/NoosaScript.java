@@ -21,6 +21,7 @@
 
 package com.watabou.noosa;
 
+import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
@@ -70,11 +71,11 @@ public class NoosaScript extends Script {
 	}
 
 	public void drawElements( FloatBuffer vertices, ShortBuffer indices, int size ) {
-		
-		vertices.position( 0 );
+
+		((Buffer)vertices).position( 0 );
 		aXY.vertexPointer( 2, 4, vertices );
-		
-		vertices.position( 2 );
+
+		((Buffer)vertices).position( 2 );
 		aUV.vertexPointer( 2, 4, vertices );
 		
 		Gdx.gl.glDrawElements( GL20.GL_TRIANGLES, size, GL20.GL_UNSIGNED_SHORT, indices );
@@ -82,11 +83,11 @@ public class NoosaScript extends Script {
 	}
 	
 	public void drawQuad( FloatBuffer vertices ) {
-		
-		vertices.position( 0 );
+
+		((Buffer)vertices).position( 0 );
 		aXY.vertexPointer( 2, 4, vertices );
-		
-		vertices.position( 2 );
+
+		((Buffer)vertices).position( 2 );
 		aUV.vertexPointer( 2, 4, vertices );
 
 		Gdx.gl.glDrawElements( GL20.GL_TRIANGLES, Quad.SIZE, GL20.GL_UNSIGNED_SHORT, Quad.INDICES_1 );
@@ -98,11 +99,11 @@ public class NoosaScript extends Script {
 		if (size == 0) {
 			return;
 		}
-		
-		vertices.position( 0 );
+
+		((Buffer)vertices).position( 0 );
 		aXY.vertexPointer( 2, 4, vertices );
-		
-		vertices.position( 2 );
+
+		((Buffer)vertices).position( 2 );
 		aUV.vertexPointer( 2, 4, vertices );
 
 		Gdx.gl.glDrawElements(

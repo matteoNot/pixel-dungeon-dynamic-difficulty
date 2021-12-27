@@ -21,6 +21,7 @@
 
 package com.watabou.glwrap;
 
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -77,7 +78,7 @@ public class Texture {
 			order( ByteOrder.nativeOrder() ).
 			asIntBuffer();
 		imageBuffer.put( pixels );
-		imageBuffer.position( 0 );
+		((Buffer)imageBuffer).position( 0 );
 		
 		Gdx.gl.glTexImage2D(
 			GL20.GL_TEXTURE_2D,
@@ -99,7 +100,7 @@ public class Texture {
 			allocateDirect( w * h ).
 			order( ByteOrder.nativeOrder() );
 		imageBuffer.put( pixels );
-		imageBuffer.position( 0 );
+		((Buffer)imageBuffer).position( 0 );
 		
 		Gdx.gl.glPixelStorei( GL20.GL_UNPACK_ALIGNMENT, 1 );
 	    

@@ -20,6 +20,7 @@
  */
 package com.watabou.pixeldungeon.scenes;
 
+import java.nio.Buffer;
 import java.nio.FloatBuffer;
 
 import com.watabou.gltextures.Gradient;
@@ -225,8 +226,8 @@ public class SurfaceScene extends PixelScene {
 			
 			vertices[12]	= 0;
 			vertices[13]	= 1;
-			
-			verticesBuffer.position( 0 );
+
+			((Buffer)verticesBuffer).position( 0 );
 			verticesBuffer.put( vertices );
 		}
 		

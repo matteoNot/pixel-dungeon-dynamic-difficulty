@@ -20,6 +20,7 @@
  */
 package com.watabou.pixeldungeon;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 
 public enum Preferences {
@@ -50,7 +51,15 @@ public enum Preferences {
 	public static final int DEFAULT_WINDOW_WIDTH = 960;
 	public static final int DEFAULT_WINDOW_HEIGHT = 640;
 
-	public static final String FILE_NAME = "preferences.xml";
+	public static final String FILE_NAME;
+	static {
+		if (Gdx.app.getType() == Application.ApplicationType.Android) {
+			FILE_NAME = "preferences";
+		}
+		else {
+			FILE_NAME = "preferences.xml";
+		}
+	}
 	
 	private com.badlogic.gdx.Preferences prefs;
 

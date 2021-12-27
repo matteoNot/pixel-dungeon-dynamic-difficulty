@@ -34,6 +34,24 @@ public class PDPlatformSupport<GameActionType> {
 		this.inputProcessor = inputProcessor;
 	}
 
+	public boolean supportImmersive() {
+		return false;
+	}
+
+	public boolean supportLandscape() {
+		return false;
+	}
+
+	public boolean supportFullscreen() {
+		return false;
+	}
+
+	public void immerse(boolean value) { }
+
+	public void landscape(boolean value) { }
+
+	public void fullscreen(boolean value) { }
+
 	public String getVersion() {
 		return version;
 	}
@@ -45,5 +63,7 @@ public class PDPlatformSupport<GameActionType> {
 	public NoosaInputProcessor<GameActionType> getInputProcessor() {
 		return inputProcessor;
 	}
+
+	public void exit() { }
 
 }

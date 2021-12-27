@@ -30,7 +30,6 @@ import com.watabou.pixeldungeon.PixelDungeon;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.ui.CheckBox;
 import com.watabou.pixeldungeon.ui.RedButton;
-import com.watabou.pixeldungeon.ui.Toolbar;
 import com.watabou.pixeldungeon.ui.Window;
 
 public class WndSettings extends Window {
@@ -68,7 +67,7 @@ public class WndSettings extends Window {
 	public WndSettings( boolean inGame ) {
 		super();
 		
-		CheckBox btnImmersive = null;
+		Button lastBtn = null;
 		
 		if (inGame) {
 			int w = BTN_HEIGHT;
@@ -111,19 +110,32 @@ public class WndSettings extends Window {
 			btnScaleUp.checked( PixelDungeon.scaleUp() );
 			add( btnScaleUp );
 
-			if (Gdx.app.getType() != Application.ApplicationType.WebGL) {
-				btnImmersive = new CheckBox( Gdx.app.getType() == Application.ApplicationType.Desktop ? resolutionText() : TXT_IMMERSIVE ) {
+			if (PixelDungeon.supportImmersive()) {
+				CheckBox btnImmersive = new CheckBox( TXT_IMMERSIVE ) {
+					@Override
+					protected void onClick() {
+						super.onClick();
+						PixelDungeon.immerse( checked() );
+					}
+				};
+				btnImmersive.setRect( 0, btnScaleUp.bottom() + GAP, WIDTH, BTN_HEIGHT );
+				btnImmersive.checked( PixelDungeon.immersed() );
+				lastBtn = btnImmersive;
+				add( btnImmersive );
+			}
+
+			if (PixelDungeon.supportFullscreen()) {
+				CheckBox btnFullscreen = new CheckBox( resolutionText() ) {
 					@Override
 					protected void onClick() {
 						super.onClick();
 						PixelDungeon.fullscreen( checked() );
 					}
 				};
-				btnImmersive.setRect( 0, btnScaleUp.bottom() + GAP, WIDTH, BTN_HEIGHT );
-				btnImmersive.checked( PixelDungeon.fullscreen() );
-				// FIXME
-				// btnImmersive.enable( android.os.Build.VERSION.SDK_INT >= 19 );
-				add( btnImmersive );
+				btnFullscreen.setRect( 0, btnScaleUp.bottom() + GAP, WIDTH, BTN_HEIGHT );
+				btnFullscreen.checked( PixelDungeon.fullscreen() );
+				lastBtn = btnFullscreen;
+				add( btnFullscreen );
 			}
 
 		}
@@ -135,7 +147,7 @@ public class WndSettings extends Window {
 				PixelDungeon.music( checked() );
 			}
 		};
-		btnMusic.setRect( 0, (btnImmersive != null ? btnImmersive.bottom() : BTN_HEIGHT) + GAP, WIDTH, BTN_HEIGHT );
+		btnMusic.setRect( 0, (lastBtn != null ? lastBtn.bottom() : BTN_HEIGHT) + GAP, WIDTH, BTN_HEIGHT );
 		btnMusic.checked( PixelDungeon.music() );
 		add( btnMusic );
 		
@@ -151,7 +163,7 @@ public class WndSettings extends Window {
 		btnSound.checked( PixelDungeon.soundFx() );
 		add( btnSound );
 
-		Button lastBtn = btnSound;
+		lastBtn = btnSound;
 		
 		if (inGame) {
 			
@@ -181,7 +193,7 @@ public class WndSettings extends Window {
 			
 		} else {
 
-			if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
+			if (PixelDungeon.supportLandscape()) {
 				RedButton btnOrientation = new RedButton( orientationText() ) {
 					@Override
 					protected void onClick() {
@@ -233,6 +245,6 @@ public class WndSettings extends Window {
 	}
 
 	private String resolutionText() {
-		return Gdx.graphics.isFullscreen() ? TXT_SWITCH_WIN : TXT_SWITCH_FULL;
+		return PixelDungeon.fullscreen() ? TXT_SWITCH_WIN : TXT_SWITCH_FULL;
 	}
 }

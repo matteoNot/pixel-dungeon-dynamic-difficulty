@@ -198,30 +198,36 @@ public class PixelDungeon extends Game {
 	 * ---> Prefernces
 	 */
 
+	public static boolean supportLandscape() {
+		return instance.getPlatformSupport().supportLandscape();
+	}
+
+	public static boolean supportImmersive() {
+		return instance.getPlatformSupport().supportImmersive();
+	}
+
+	public static boolean supportFullscreen() {
+		return instance.getPlatformSupport().supportFullscreen();
+	}
+
 	public static void landscape( boolean value ) {
-		// FIXME
-//		Game.instance.setRequestedOrientation( value ?
-//			ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE :
-//			ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
-//		Preferences.INSTANCE.put( Preferences.KEY_LANDSCAPE, value );
+		instance.getPlatformSupport().landscape(value);
 	}
 	
 	public static boolean landscape() {
 		return width > height;
 	}
 
-	public static void fullscreen(boolean value) {
-		final Preferences prefs = Preferences.INSTANCE;
-		if (value) {
-			prefs.put(Preferences.KEY_WINDOW_FULLSCREEN, true);
+	public static void immerse( boolean value ) {
+		instance.getPlatformSupport().immerse(value);
+	}
 
-			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-		} else {
-			prefs.put(Preferences.KEY_WINDOW_FULLSCREEN, false);
-			int w = prefs.getInt(Preferences.KEY_WINDOW_WIDTH, Preferences.DEFAULT_WINDOW_WIDTH);
-			int h = prefs.getInt(Preferences.KEY_WINDOW_HEIGHT, Preferences.DEFAULT_WINDOW_HEIGHT);
-			Gdx.graphics.setWindowedMode(w, h);
-		}
+	public static boolean immersed() {
+		return Preferences.INSTANCE.getBoolean( Preferences.KEY_IMMERSIVE, false );
+	}
+
+	public static void fullscreen(boolean value) {
+		instance.getPlatformSupport().fullscreen(value);
 	}
 
 	public static boolean fullscreen() {

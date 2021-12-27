@@ -66,16 +66,20 @@ public class Uniform {
 	}
 	
 	public void valueM3( float[] value ) {
+		/*
 		buf.rewind();
 		buf.put(value);
 		buf.flip();
-		Gdx.gl.glUniformMatrix3fv( location, 1, false, buf );
+		 */
+		Gdx.gl.glUniformMatrix3fv( location, 1, false, value, 0 );
 	}
 	
 	public void valueM4( float[] value ) {
+		/*
 		buf.rewind();
 		buf.put(value);
 		buf.flip();
-		Gdx.gl.glUniformMatrix4fv( location, 1, false, buf );
+		 */
+		Gdx.gl.glUniformMatrix4fv( location, 1, false, value, 0 );
 	}
 }

@@ -252,7 +252,7 @@ public abstract class Game<GameActionType> implements ApplicationListener {
 	}
 
 	public void finish() {
-		Gdx.app.exit();
+		platformSupport.exit();
 	}
 
 	public NoosaInputProcessor<GameActionType> getInputProcessor() {

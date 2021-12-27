@@ -126,14 +126,8 @@ public class Lwjgl3Launcher {
 		// TODO: It have to be pulled from build.gradle, but I don't know how it can be done
 		config.setTitle(appName);
 		return new Lwjgl3Application(new PixelDungeon(
-				new Lwjgl3Support(version, storageRelativePath, new Lwjgl3InputProcessor())
+				new Lwjgl3PlatformSupport(version, storageRelativePath, new Lwjgl3InputProcessor())
 		), config);
-	}
-
-	private static class Lwjgl3Support extends PDPlatformSupport {
-		public Lwjgl3Support( String version, String basePath, NoosaInputProcessor inputProcessor ) {
-			super( version, basePath, inputProcessor );
-		}
 	}
 
 }

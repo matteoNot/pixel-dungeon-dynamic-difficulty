@@ -21,6 +21,7 @@
 
 package com.watabou.noosa;
 
+import java.nio.Buffer;
 import java.nio.FloatBuffer;
 
 import com.watabou.utils.RectF;
@@ -161,7 +162,7 @@ public class Image extends Visual {
 			ra, ga, ba, aa );
 		
 		if (dirty) {
-			verticesBuffer.position( 0 );
+			((Buffer)verticesBuffer).position( 0 );
 			verticesBuffer.put( vertices );
 			dirty = false;
 		}

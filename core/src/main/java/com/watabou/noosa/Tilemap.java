@@ -21,6 +21,7 @@
 
 package com.watabou.noosa;
 
+import java.nio.Buffer;
 import java.nio.FloatBuffer;
 
 import com.watabou.gltextures.SmartTexture;
@@ -91,7 +92,7 @@ public class Tilemap extends Visual {
 			float x2 = x1 + cellW;
 			
 			int pos = i * mapWidth + updated.left;
-			quads.position( 16 * pos );
+			((Buffer)quads).position( 16 * pos );
 			
 			for (int j=updated.left; j < updated.right; j++) {
 
