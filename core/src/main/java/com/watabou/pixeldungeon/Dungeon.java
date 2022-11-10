@@ -81,6 +81,9 @@ public class Dungeon {
 	public static boolean dewVial;		// true if the dew vial can be spawned
 	
 	public static int challenges;
+
+	public static int difficultyLevel;
+	public static boolean dynamicDifficulty;
 	
 	public static Hero hero;
 	public static Level level;
