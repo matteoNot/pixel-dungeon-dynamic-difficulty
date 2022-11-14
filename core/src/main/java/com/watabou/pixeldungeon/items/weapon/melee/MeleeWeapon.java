@@ -58,7 +58,10 @@ public class MeleeWeapon extends Weapon {
 	public int max() {
 		return isBroken() ? max0() : max0() + level() * tier;
 	}
-	
+
+	public int tier(){
+		return tier;
+	}
 	@Override
 	final public Item upgrade() {
 		return upgrade( false );

@@ -42,10 +42,13 @@ import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.watabou.pixeldungeon.items.Ankh;
 import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.armor.Armor;
 import com.watabou.pixeldungeon.items.potions.Potion;
 import com.watabou.pixeldungeon.items.rings.Ring;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
 import com.watabou.pixeldungeon.items.wands.Wand;
+import com.watabou.pixeldungeon.items.weapon.Weapon;
+import com.watabou.pixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.watabou.pixeldungeon.levels.CavesBossLevel;
 import com.watabou.pixeldungeon.levels.CavesLevel;
 import com.watabou.pixeldungeon.levels.CityBossLevel;
@@ -86,8 +89,11 @@ public class Dungeon {
 	public static boolean dynamicDifficulty;
 	
 	public static Hero hero;
+	public static float heroLevelScore;
+	public static float heroLiveScore;
+	public static float heroEquipScore;
+	public static float heroObjScore;
 	public static Level level;
-	
 	public static int depth;
 	public static int gold;
 	// Reason of death
@@ -226,12 +232,58 @@ public class Dungeon {
 			level = new DeadEndLevel();
 			Statistics.deepestFloor--;
 		}
+
+		calcHeroLevelScore();
+		calcHeroEquiScore();
+		calcHeroItemScore();
+		calcHeroLiveScore();
 		
 		level.create();
 		
 		Statistics.qualifiedForNoKilling = !bossLevel();
 		
 		return level;
+	}
+
+	public static void calcHeroLevelScore(){
+		heroLevelScore=(float)hero.lvl/depth;
+	}
+
+	public static void calcHeroEquiScore(){
+		float i=0;
+		int highestW=hero.belongings.weapon==null?
+				0:hero.belongings.weapon instanceof MeleeWeapon?
+				hero.belongings.weapon.effectiveLevel()+((MeleeWeapon)hero.belongings.weapon).tier()
+				:hero.belongings.weapon.effectiveLevel();
+		int highestA=hero.belongings.armor!=null?hero.belongings.armor.effectiveLevel()+hero.belongings.armor.tier:0;
+
+		for (Item it : hero.belongings.backpack)
+			if (it instanceof Weapon || it instanceof Wand || it instanceof Ring || it instanceof Armor) {
+				i+=it.level()-1;
+				if(it instanceof  Weapon && it.effectiveLevel()>highestW && hero.STR>=((Weapon) it).STR)
+					highestW=it.effectiveLevel();
+				if(it instanceof  Armor && it.effectiveLevel()>highestA && hero.STR>=((Armor) it).STR)
+					highestA=it.effectiveLevel();
+				if(it instanceof  MeleeWeapon && it.effectiveLevel()+((MeleeWeapon) it).tier()>highestW && hero.STR>=((Weapon) it).STR)
+					highestW=it.effectiveLevel();
+			}
+		heroEquipScore=((float)(highestA+highestW/2)/depth);
+	}
+
+	public static void calcHeroItemScore(){
+		heroObjScore=hero.belongings.backpack.items.size();
+	}
+
+	public static void calcHeroLiveScore(){
+		int i=0;
+		for (Item it : hero.belongings.backpack)
+			if (it.name().equals("Potion of Healing")) {
+				i++;
+				if (it.isIdentified())
+					i++;
+			}
+
+		heroLiveScore=(float)((float)(hero.HP*(float)(1+i/4))/hero.HT);
 	}
 	
 	public static void resetLevel() {

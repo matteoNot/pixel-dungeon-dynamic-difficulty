@@ -334,7 +334,7 @@ public abstract class RegularLevel extends Level {
 	}
 	
 	protected int nTraps() {
-		return Dungeon.depth <= 1 ? 0 : Random.Int( 1, rooms.size() + Dungeon.depth );
+		return Dungeon.depth <= 1 ? 0 : Random.Int( 1, rooms.size() + Dungeon.depth +(Dungeon.heroEquipScore>1?0:-1)+(Dungeon.heroEquipScore>2?2:1)+(Dungeon.heroLiveScore>1?(int)Dungeon.heroLiveScore-1:-1));
 	}
 	
 	protected float[] trapChances() {
@@ -523,14 +523,25 @@ public abstract class RegularLevel extends Level {
 	
 	@Override
 	public int nMobs() {
-		return 2 + Dungeon.depth % 5 + Random.Int( 3 );
+		int level = Dungeon.heroLevelScore>=1.0 ? 1:0;
+		int health = Dungeon.heroLiveScore>1 ? 1:-1;
+		int equip = Dungeon.heroEquipScore>=1.0? 1:0;
+		if(Dungeon.dynamicDifficulty)
+			return 2 + Dungeon.depth % 5 + (level*Random.Int(1,2)+health*Random.Int(1,2)+equip*Random.Int(1,2));
+		else
+			return 2 + Dungeon.depth % 5 + Random.Int(3);
 	}
 	
 	@Override
 	protected void createMobs() {
 		int nMobs = nMobs();
+		int level = Dungeon.heroLevelScore>1.1 ? 1:0;
+		int health = Dungeon.heroLiveScore>2 ? 1:-1;
+		int equip = Dungeon.heroEquipScore>1.5? 1:0;
 		for (int i=0; i < nMobs; i++) {
-			Mob mob = Bestiary.mob( Dungeon.depth );
+			Mob mob = (level+health+equip)==3 && Dungeon.dynamicDifficulty? Bestiary.mob( Random.Int(Dungeon.depth,Integer.min(Dungeon.depth+2,24) )):
+					(level+health+equip)==-1 && Dungeon.dynamicDifficulty? Bestiary.mob(Random.Int(Integer.max(1, Dungeon.depth - 2), Dungeon.depth)):
+							Bestiary.mob(Dungeon.depth);
 			do {
 				mob.pos = randomRespawnCell();
 			} while (mob.pos == -1);
