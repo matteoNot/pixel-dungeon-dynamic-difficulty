@@ -334,7 +334,11 @@ public abstract class RegularLevel extends Level {
 	}
 	
 	protected int nTraps() {
-		return Dungeon.depth <= 1 ? 0 : Random.Int( 1, rooms.size() + Dungeon.depth +(Dungeon.heroEquipScore>1?0:-1)+(Dungeon.heroEquipScore>2?2:1)+(Dungeon.heroLiveScore>1?(int)Dungeon.heroLiveScore-1:-1));
+		return Dungeon.depth <= 1 ? 0 :
+				Random.Int( 1, rooms.size() + Dungeon.depth +
+						(Dungeon.dynamicDifficulty?
+								(Dungeon.heroEquipScore>1?0:-1)+(Dungeon.heroEquipScore>2?2:1)+(Dungeon.heroLiveScore>1?(int)Dungeon.heroLiveScore-1:-1)
+								:0));
 	}
 	
 	protected float[] trapChances() {
@@ -598,9 +602,20 @@ public abstract class RegularLevel extends Level {
 	protected void createItems() {
 		
 		int nItems = 3;
-		while (Random.Float() < 0.4f) {
-			nItems++;
+		if(Dungeon.dynamicDifficulty){
+			nItems=2;
+			float treshold =1 - Dungeon.heroObjScore/Dungeon.hero.belongings.backpack.size;
+			while (Random.Float() < treshold) {
+				nItems++;
+				treshold -= 0.1;
+			}
 		}
+		else {
+			while (Random.Float() < 0.4f) {
+				nItems++;
+			}
+		}
+
 		
 		for (int i=0; i < nItems; i++) {
 			Heap.Type type = null;
