@@ -151,7 +151,12 @@ public abstract class RegularLevel extends Level {
 	
 	protected boolean initRooms() {
 		rooms = new HashSet<Room>();
-		split( new Rect( 0, 0, WIDTH - 1, HEIGHT - 1 ) );
+		if(Dungeon.dynamicDifficulty){
+			double k = (Dungeon.heroLevelScore>=1?1:0.8)*(Dungeon.heroLiveScore>=2?1:0.8)*(Dungeon.heroEquipScore>=2?1:0.8)*(Dungeon.heroObjScore>=15?1:0.8);
+			split( new Rect( 0, 0, (int)(k*WIDTH) - 1, (int)(k*HEIGHT) - 1 ) );
+		}
+		else
+			split( new Rect( 0, 0, WIDTH - 33, HEIGHT - 33 ) );
 		
 		if (rooms.size() < 8) {
 			return false;
@@ -337,7 +342,7 @@ public abstract class RegularLevel extends Level {
 		return Dungeon.depth <= 1 ? 0 :
 				Random.Int( 1, rooms.size() + Dungeon.depth +
 						(Dungeon.dynamicDifficulty?
-								(Dungeon.heroEquipScore>1?0:-1)+(Dungeon.heroEquipScore>2?2:1)+(Dungeon.heroLiveScore>1?(int)Dungeon.heroLiveScore-1:-1)
+								(Dungeon.heroEquipScore>=1?0:-1)+(Dungeon.heroEquipScore>=2?2:1)+(Dungeon.heroLiveScore>=1?(int)Dungeon.heroLiveScore-1:-1)
 								:0));
 	}
 	
@@ -345,12 +350,15 @@ public abstract class RegularLevel extends Level {
 		float[] chances = { 1, 1, 1, 1, 1, 1, 1, 1 };
 		return chances;
 	}
-	
+
 	protected int minRoomSize = 7;
 	protected int maxRoomSize = 9;
 	
 	protected void split( Rect rect ) {
-		
+		if(Dungeon.dynamicDifficulty){
+			minRoomSize=(int)(14.0*(Dungeon.heroLevelScore>=1?1:0.8)*(Dungeon.heroLiveScore>=2?1:0.8)*(Dungeon.heroEquipScore>=2?1:0.8)*(Dungeon.heroObjScore>=15?1:0.8));
+			maxRoomSize=(int)(18.0*(Dungeon.heroLevelScore>=1?1:0.8)*(Dungeon.heroLiveScore>=2?1:0.8)*(Dungeon.heroEquipScore>=2?1:0.8)*(Dungeon.heroObjScore>=15?1:0.8));
+		}
 		int w = rect.width();
 		int h = rect.height();
 		
