@@ -32,7 +32,11 @@ import com.watabou.pixeldungeon.actors.mobs.Bestiary;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.potions.Potion;
+import com.watabou.pixeldungeon.items.potions.PotionOfHealing;
+import com.watabou.pixeldungeon.items.weapon.melee.Dagger;
 import com.watabou.pixeldungeon.levels.Room.Type;
+import com.watabou.pixeldungeon.plants.Earthroot;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Graph;
@@ -180,7 +184,15 @@ public class SewerBossLevel extends RegularLevel {
 	
 	@Override
 	protected void createMobs() {
+
 		Mob mob = Bestiary.mob( Dungeon.depth );
+		if(Dungeon.dynamicDifficulty)
+			if(Dungeon.heroLevelScore>=1.1 && Dungeon.heroLiveScore>=2 && Dungeon.heroEquipScore>=2){
+				Mob helper = Bestiary.mob(Dungeon.depth+1);
+				helper.pos = roomExit.random();
+				mobs.add(helper);
+			}
+
 		mob.pos = roomExit.random();
 		mobs.add( mob );
 	}
@@ -199,6 +211,16 @@ public class SewerBossLevel extends RegularLevel {
 			} while (pos == entrance || map[pos] == Terrain.SIGN);
 			drop( item, pos ).type = Heap.Type.SKELETON;
 		}
+		if(Dungeon.dynamicDifficulty)
+			if(Dungeon.heroLevelScore<1 && Dungeon.heroEquipScore<1.5 && Dungeon.heroLevelScore<1.5){
+					PotionOfHealing poh = new PotionOfHealing();
+					int pos;
+					do {
+						pos = roomEntrance.random();
+					} while (pos == entrance || map[pos] == Terrain.SIGN);
+					drop(poh, pos ).type = Heap.Type.CHEST;
+
+			}
 	}
 	
 	public void seal() {
