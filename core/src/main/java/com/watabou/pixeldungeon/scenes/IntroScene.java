@@ -46,8 +46,8 @@ public class IntroScene extends PixelScene {
 	private static final String TXT_NO		= "Normal version";
 	private static final String TEXT = 	
 		"This game is a modified version of pixel dungeon featuring dynamic difficulty (the difficulty" +
-		" is adjusted in order to give the player a more fair game)." +
-		"Do you want to try the dynamic difficulty?.\n\n";
+		" is adjusted in order to give the player a more fair game). " +
+		"Do you want to try the dynamic difficulty?\n\n";
 
 	@Override
 	public void create() {
