@@ -151,9 +151,9 @@ public abstract class RegularLevel extends Level {
 	
 	protected boolean initRooms() {
 		rooms = new HashSet<Room>();
-		if(Dungeon.dynamicDifficulty && Dungeon.depth!=5){
-			double k = (Dungeon.heroLevelScore>=1?1:0.8)*(Dungeon.heroLiveScore>=2?1:0.8)*(Dungeon.heroEquipScore>=2?1:0.8)*(Dungeon.heroObjScore>=15?1:0.8);
-			split( new Rect( 0, 0, (int)(k*WIDTH) - 1, (int)(k*HEIGHT) - 1 ) );
+		if(Dungeon.dynamicDifficulty && Dungeon.depth!=5 && Dungeon.depth!=1){
+			float mean = (3f+Dungeon.getHeroLevelScoreLevel()+Dungeon.getHeroLifeScoreLevel()+Dungeon.getHeroEquipScoreLevel())/18f;
+			split( new Rect( 0, 0, (int)(mean*WIDTH) - 1, (int)(mean*HEIGHT) - 1 ) );
 		}
 		else
 			split( new Rect( 0, 0, WIDTH - 33, HEIGHT - 33 ) );
@@ -340,10 +340,10 @@ public abstract class RegularLevel extends Level {
 	
 	protected int nTraps() {
 		return Dungeon.depth <= 1 ? 0 :
-				Random.Int( 1, rooms.size() + Dungeon.depth +
+				Random.Int( 1, Integer.max(rooms.size() + Dungeon.depth +
 						(Dungeon.dynamicDifficulty?
-								(Dungeon.heroEquipScore>=1?0:-1)+(Dungeon.heroEquipScore>=2?2:1)+(Dungeon.heroLiveScore>=1?(int)Dungeon.heroLiveScore-1:-1)
-								:0));
+								(Dungeon.getHeroEquipScoreLevel()-2)+(Dungeon.getHeroLifeScoreLevel()-2)
+								:0),1));
 	}
 	
 	protected float[] trapChances() {
@@ -355,9 +355,10 @@ public abstract class RegularLevel extends Level {
 	protected int maxRoomSize = 9;
 	
 	protected void split( Rect rect ) {
-		if(Dungeon.dynamicDifficulty && Dungeon.depth!=5){
-			minRoomSize=(int)(14.0*(Dungeon.heroLevelScore>=1?1:0.8)*(Dungeon.heroLiveScore>=2?1:0.8)*(Dungeon.heroEquipScore>=2?1:0.8)*(Dungeon.heroObjScore>=15?1:0.8));
-			maxRoomSize=(int)(18.0*(Dungeon.heroLevelScore>=1?1:0.8)*(Dungeon.heroLiveScore>=2?1:0.8)*(Dungeon.heroEquipScore>=2?1:0.8)*(Dungeon.heroObjScore>=15?1:0.8));
+		if(Dungeon.dynamicDifficulty && Dungeon.depth!=5 && Dungeon.depth!=1){
+			float mean = -1f+(float)(Dungeon.getHeroLevelScoreLevel()+Dungeon.getHeroLifeScoreLevel()+Dungeon.getHeroEquipScoreLevel())/3;
+			minRoomSize=(int)(7f+(mean));
+			maxRoomSize=(int)(9f+(mean));
 		}
 		int w = rect.width();
 		int h = rect.height();
@@ -535,9 +536,9 @@ public abstract class RegularLevel extends Level {
 	
 	@Override
 	public int nMobs() {
-		int level = Dungeon.heroLevelScore>=1.0 ? 1:0;
-		int health = Dungeon.heroLiveScore>1 ? 1:-1;
-		int equip = Dungeon.heroEquipScore>=1.0? 1:0;
+		int level = Dungeon.getHeroLevelScoreLevel()<2 || Dungeon.getHeroLevelScoreLevel()>3? Dungeon.getHeroLevelScoreLevel()<1 || Dungeon.getHeroLevelScoreLevel()>4?2:1:0;
+		int health = -2+Dungeon.getHeroLifeScoreLevel()<0? 0:1;
+		int equip = Dungeon.getHeroEquipScoreLevel()>2? 1:0;
 		if(Dungeon.dynamicDifficulty)
 			return 2 + Dungeon.depth % 5 + (level*Random.Int(1,2)+health*Random.Int(1,2)+equip*Random.Int(1,2));
 		else
@@ -547,12 +548,10 @@ public abstract class RegularLevel extends Level {
 	@Override
 	protected void createMobs() {
 		int nMobs = nMobs();
-		int level = Dungeon.heroLevelScore>1.1 ? 1:0;
-		int health = Dungeon.heroLiveScore>2 ? 1:-1;
-		int equip = Dungeon.heroEquipScore>1.5? 1:0;
+		int level = -2+Dungeon.getHeroLevelScoreLevel();
 		for (int i=0; i < nMobs; i++) {
-			Mob mob = (level+health+equip)==3 && Dungeon.dynamicDifficulty? Bestiary.mob( Random.Int(Dungeon.depth,Integer.min(Dungeon.depth+2,24) )):
-					(level+health+equip)==-1 && Dungeon.dynamicDifficulty? Bestiary.mob(Random.Int(Integer.max(1, Dungeon.depth - 2), Dungeon.depth)):
+			Mob mob = (level)==3 && Dungeon.dynamicDifficulty? Bestiary.mob( Random.Int(Dungeon.depth,Integer.min(Dungeon.depth+2,24)%5!=0?Integer.min(Dungeon.depth+2,24):Integer.min(Dungeon.depth+2,24)-1 )):
+					(level)<0 && Dungeon.dynamicDifficulty? Bestiary.mob(Random.Int(Integer.max(1, Dungeon.depth - 2), Dungeon.depth)):
 							Bestiary.mob(Dungeon.depth);
 			do {
 				mob.pos = randomRespawnCell();
@@ -608,14 +607,14 @@ public abstract class RegularLevel extends Level {
 	
 	@Override
 	protected void createItems() {
-		
+		float mean= (Dungeon.getHeroItemScoreLevel()+Dungeon.getHeroLevelScoreLevel()+2f)/2f;
 		int nItems = 3;
 		if(Dungeon.dynamicDifficulty){
 			nItems=2;
-			float treshold =1 - Dungeon.heroObjScore/Dungeon.hero.belongings.backpack.size;
-			while (Random.Float() < treshold) {
+			float threshold =1.4f - (mean)/6f;
+			while (Random.Float() < threshold) {
 				nItems++;
-				treshold -= 0.1;
+				threshold -= 0.1;
 			}
 		}
 		else {

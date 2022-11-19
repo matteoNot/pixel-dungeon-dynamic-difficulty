@@ -89,10 +89,10 @@ public class Dungeon {
 	public static boolean dynamicDifficulty;
 	
 	public static Hero hero;
-	public static float heroLevelScore;
-	public static float heroLiveScore;
-	public static float heroEquipScore;
-	public static float heroObjScore;
+	private static float heroLevelScore;
+	private static float heroLifeScore;
+	private static float heroEquipScore;
+	private static float heroObjScore;
 	public static Level level;
 	public static int depth;
 	public static int gold;
@@ -234,9 +234,9 @@ public class Dungeon {
 		}
 
 		calcHeroLevelScore();
-		calcHeroEquiScore();
+		calcHeroEquipScore();
 		calcHeroItemScore();
-		calcHeroLiveScore();
+		calcHeroLifeScore();
 		
 		level.create();
 		
@@ -249,7 +249,21 @@ public class Dungeon {
 		heroLevelScore=(float)hero.lvl/depth;
 	}
 
-	public static void calcHeroEquiScore(){
+	public static int getHeroLevelScoreLevel(){
+		if(heroLevelScore<0.5)
+			return 0;
+		else if(heroLevelScore<0.8 && heroLevelScore>=0.5)
+			return 1;
+		else if(heroLevelScore<1 && heroLevelScore>=0.8)
+			return 2;
+		else if(heroLevelScore<1.2 && heroLevelScore>=1)
+			return 3;
+		else if(heroLevelScore<1.5 && heroLevelScore>=1.2)
+			return 4;
+		else return 5;
+	}
+
+	public static void calcHeroEquipScore(){
 		float i=0;
 		int highestW=hero.belongings.weapon==null?
 				0:hero.belongings.weapon instanceof MeleeWeapon?
@@ -270,11 +284,39 @@ public class Dungeon {
 		heroEquipScore=((float)(highestA+highestW/2)/depth);
 	}
 
+	public static int getHeroEquipScoreLevel(){
+		if(heroEquipScore<0.5)
+			return 0;
+		else if(heroEquipScore<0.8 && heroEquipScore>=0.5)
+			return 1;
+		else if(heroEquipScore<1 && heroEquipScore>=0.8)
+			return 2;
+		else if(heroEquipScore<1.2 && heroEquipScore>=1)
+			return 3;
+		else if(heroEquipScore<1.5 && heroEquipScore>=1.2)
+			return 4;
+		else return 5;
+	}
+
 	public static void calcHeroItemScore(){
 		heroObjScore=hero.belongings.backpack.items.size();
 	}
 
-	public static void calcHeroLiveScore(){
+	public static int getHeroItemScoreLevel(){
+		if(heroObjScore<2)
+			return 0;
+		else if(heroObjScore<6)
+			return 1;
+		else if(heroObjScore<12)
+			return 2;
+		else if(heroObjScore<16)
+			return 3;
+		else if(heroObjScore<18)
+			return 4;
+		else return 5;
+	}
+
+	public static void calcHeroLifeScore(){
 		int i=0;
 		for (Item it : hero.belongings.backpack)
 			if (it.name().equals("Potion of Healing")) {
@@ -283,7 +325,21 @@ public class Dungeon {
 					i++;
 			}
 
-		heroLiveScore=(float)((float)(hero.HP*(float)(1+i/4))/hero.HT);
+		heroLifeScore=(float)((float)(hero.HP*(float)(1+i/4))/hero.HT);
+	}
+
+	public static int getHeroLifeScoreLevel(){
+		if(heroLifeScore<0.5)
+			return 0;
+		else if(heroLifeScore<1 && heroLifeScore>=0.5)
+			return 1;
+		else if(heroLifeScore<1.5 && heroLifeScore>=1)
+			return 2;
+		else if(heroLifeScore<2 && heroLifeScore>=1.5)
+			return 3;
+		else if(heroLifeScore<3 && heroLifeScore>=2)
+			return 4;
+		else return 5;
 	}
 	
 	public static void resetLevel() {

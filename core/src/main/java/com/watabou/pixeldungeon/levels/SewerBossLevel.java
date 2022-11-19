@@ -187,7 +187,7 @@ public class SewerBossLevel extends RegularLevel {
 
 		Mob mob = Bestiary.mob( Dungeon.depth );
 		if(Dungeon.dynamicDifficulty)
-			if(Dungeon.heroLevelScore>=1.1 && Dungeon.heroLiveScore>=2 && Dungeon.heroEquipScore>=2){
+			if(Dungeon.getHeroLevelScoreLevel()>3 && Dungeon.getHeroLifeScoreLevel()>3 && Dungeon.getHeroEquipScoreLevel()>2){
 				Mob helper = Bestiary.mob(Dungeon.depth+1);
 				helper.pos = roomExit.random();
 				mobs.add(helper);
@@ -212,7 +212,7 @@ public class SewerBossLevel extends RegularLevel {
 			drop( item, pos ).type = Heap.Type.SKELETON;
 		}
 		if(Dungeon.dynamicDifficulty)
-			if(Dungeon.heroLevelScore<1 && Dungeon.heroEquipScore<1.5 && Dungeon.heroLevelScore<1.5){
+			if(Dungeon.getHeroLevelScoreLevel()<2 || Dungeon.getHeroEquipScoreLevel()<2 || Dungeon.getHeroLifeScoreLevel()<2){
 					PotionOfHealing poh = new PotionOfHealing();
 					int pos;
 					do {
