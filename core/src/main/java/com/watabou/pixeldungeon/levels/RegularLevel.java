@@ -152,7 +152,7 @@ public abstract class RegularLevel extends Level {
 	protected boolean initRooms() {
 		rooms = new HashSet<Room>();
 		if(Dungeon.dynamicDifficulty && Dungeon.depth!=5 && Dungeon.depth!=1){
-			float mean = (3f+Dungeon.getHeroLevelScoreLevel()+Dungeon.getHeroLifeScoreLevel()+Dungeon.getHeroEquipScoreLevel())/18f;
+			float mean = Float.max(0.4f,(3f+Dungeon.getHeroLevelScoreLevel()+Dungeon.getHeroLifeScoreLevel()+Dungeon.getHeroEquipScoreLevel())/18f);
 			split( new Rect( 0, 0, (int)(mean*WIDTH) - 1, (int)(mean*HEIGHT) - 1 ) );
 		}
 		else
@@ -356,7 +356,7 @@ public abstract class RegularLevel extends Level {
 	
 	protected void split( Rect rect ) {
 		if(Dungeon.dynamicDifficulty && Dungeon.depth!=5 && Dungeon.depth!=1){
-			float mean = -1f+(float)(Dungeon.getHeroLevelScoreLevel()+Dungeon.getHeroLifeScoreLevel()+Dungeon.getHeroEquipScoreLevel())/3;
+			float mean = (float)(3f+Dungeon.getHeroLevelScoreLevel()+Dungeon.getHeroLifeScoreLevel()+Dungeon.getHeroEquipScoreLevel())/3f;
 			minRoomSize=(int)(7f+(mean));
 			maxRoomSize=(int)(9f+(mean));
 		}

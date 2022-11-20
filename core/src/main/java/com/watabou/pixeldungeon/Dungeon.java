@@ -86,7 +86,7 @@ public class Dungeon {
 	public static int challenges;
 
 	public static int difficultyLevel;
-	public static boolean dynamicDifficulty;
+	public static boolean dynamicDifficulty=true;
 	
 	public static Hero hero;
 	private static float heroLevelScore;
