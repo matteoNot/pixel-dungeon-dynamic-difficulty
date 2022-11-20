@@ -357,8 +357,9 @@ public abstract class RegularLevel extends Level {
 	protected void split( Rect rect ) {
 		if(Dungeon.dynamicDifficulty && Dungeon.depth!=5 && Dungeon.depth!=1){
 			float mean = (float)(3f+Dungeon.getHeroLevelScoreLevel()+Dungeon.getHeroLifeScoreLevel()+Dungeon.getHeroEquipScoreLevel())/3f;
-			minRoomSize=(int)(7f+(mean));
-			maxRoomSize=(int)(9f+(mean));
+			mean -= 1;
+			minRoomSize=(int)(5f+(mean));
+			maxRoomSize=(int)(7f+(mean));
 		}
 		int w = rect.width();
 		int h = rect.height();
