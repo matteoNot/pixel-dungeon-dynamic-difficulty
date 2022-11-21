@@ -33,7 +33,7 @@ import com.watabou.pixeldungeon.windows.WndStory;
 
 public class IntroScene extends PixelScene {
 
-	private static final float GAP				= 2;
+/*	private static final float GAP				= 2;
 	private static final float BUTTON_HEIGHT	= 24;
 
 	private static final float WIDTH_P	= 116;
@@ -43,12 +43,26 @@ public class IntroScene extends PixelScene {
 	private static final float HEIGHT_L	= 124;
 
 	private static final String TXT_YES		= "Dynamic difficulty";
-	private static final String TXT_NO		= "Normal version";
+	private static final String TXT_NO		= "Normal version";*/
 	private static final String TEXT = 	
 		"This game is a modified version of pixel dungeon featuring dynamic difficulty (the difficulty" +
-		" is adjusted in order to give the player a more fair game). " +
-		"Do you want to try the dynamic difficulty?\n\n";
+		" is adjusted in order to give the player a more fair game). ";
 
+	@Override
+	public void create() {
+		super.create();
+
+		add( new WndStory( TEXT ) {
+			@Override
+			public void hide() {
+				super.hide();
+				Game.switchScene( InterlevelScene.class );
+			}
+		} );
+
+		fadeIn();
+	}
+/*
 	@Override
 	public void create() {
 		super.create();
@@ -156,5 +170,5 @@ public class IntroScene extends PixelScene {
 
 			secondary.hardlight( highlighted ? SECONDARY_COLOR_H : SECONDARY_COLOR_N );
 		}
-	}
+	}*/
 }
